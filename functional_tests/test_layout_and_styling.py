@@ -1,11 +1,9 @@
 from selenium.webdriver.common.keys import Keys
 from .base import FunctionalTest
-from unittest import skip
 
 
 class LayoutAndStylingTest(FunctionalTest):
     
-    @skip("waiting for implementation")
     def test_layout_and_styling(self):
         # Edith goes to the home page
         self.browser.get(self.live_server_url)

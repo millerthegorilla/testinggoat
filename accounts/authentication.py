@@ -2,7 +2,8 @@ from accounts.models import User, Token
 
 class PasswordlessAuthenticationBackend(object):
 
-    def authenticate(self, uid):
+    def authenticate(self, request, *args, **kwargs):
+        uid = kwargs['uid']
         try:
             token = Token.objects.get(uid=uid)
             return User.objects.get(email=token.email)

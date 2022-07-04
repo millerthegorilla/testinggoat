@@ -3,11 +3,8 @@ from fabric.context_managers import settings, shell_env
 
 
 def _get_server_env_vars(host):
-    env_lines = run('cat ~/src/obey_the_testing_goat/code/.env')
-    breakpoint()    
-    bob = dict(l.split('=') for l in env_lines if l)
-    breakpoint()
-    return bob
+    env_lines = run('cat ~/src/obey_the_testing_goat/code/.env')   
+    return dict(l.split('=') for l in env_lines.split('\r\n') if l)
 
 def create_session_on_server(host, email):
     manage_dot_py = _get_manage_dot_py(host)

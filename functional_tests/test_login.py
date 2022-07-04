@@ -1,8 +1,12 @@
-from django.core import mail
-from selenium.webdriver.common.keys import Keys
 import re
+from types import SimpleNamespace
+
+from selenium.webdriver.common.keys import Keys
+
+from django.core import mail
 
 from .base import FunctionalTest
+from .server_tools import get_email
 
 TEST_EMAIL = 'edith@example.com'
 SUBJECT = 'Your login link for Superlists'
@@ -27,7 +31,10 @@ class LoginTest(FunctionalTest):
         ))
 
         # She checks her email and finds a message
-        email = mail.outbox[0]  
+        if self.staging_server:
+            email = SimpleNamespace(**get_email(self.staging_server))
+        else:
+            email = mail.outbox[0]
         self.assertIn(TEST_EMAIL, email.to)
         self.assertEqual(email.subject, SUBJECT)
 

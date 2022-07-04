@@ -20,4 +20,13 @@ def _get_manage_dot_py(host):
 def reset_database(host):
     manage_dot_py = _get_manage_dot_py(host)
     with settings(host_string=f'dev@{host}'):  
-        run(f'{manage_dot_py} flush --noinput')  
+        run(f'{manage_dot_py} flush --noinput') 
+
+def get_email(host):
+    email = {}
+    with settings(host_string=f'dev@{host}'):
+        email['to'] = run('journalctl -o cat -u gunicorn.service |grep To | tail -1 | sed -r "s/To: //"')
+        email['body'] = run('journalctl -o cat -u gunicorn.service |grep Use -A1 | tail -2')
+        email['url'] = run('journalctl -n10 -ocat -u gunicorn.service |grep -A1 Use |grep -v Use')
+        email['subject'] = run('journalctl -o cat -u gunicorn.service |grep Subject | tail -1 | sed -r "s/Subject: //"')
+        return email  

@@ -1,5 +1,3 @@
-import sys
-
 from django import conf
 from django.contrib import auth, messages
 from django.core.mail import send_mail

@@ -132,6 +132,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
+import logging
+def NoFavIconFilter(record):
+    if "Not Found: /favicon.ico" in record.getMessage():
+        return False
+    return True
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -139,6 +145,13 @@ LOGGING = {
         'console': {
             'level': 'DEBUG',
             'class': 'logging.StreamHandler',
+            'filters': ['favicon'],
+        },
+    },
+    'filters': {
+        'favicon': {
+            '()': 'django.utils.log.CallbackFilter',
+            'callback': NoFavIconFilter
         },
     },
     'loggers': {

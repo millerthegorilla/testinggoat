@@ -63,6 +63,13 @@ class MyListsTest(FunctionalTest):
         self.wait_for(lambda: self.browser.find_element_by_link_text('Click cows'))
         
         self.browser.find_element_by_link_text('Click cows').click()
-        self.wait_for(lambda: self.assertEqual(self.browser.find_elements_by_link_text('My lists'),
-                        []
-        ))
+        self.wait_for(lambda: self.assertEqual(self.browser.current_url, second_list_url)
+        )
+
+        # She logs out.  The "My lists" option disappears
+
+        self.browser.find_element_by_link_text('Log out').click()
+        self.wait_for(lambda: self.assertEqual(
+            self.browser.find_elements_by_link_text('My lists'),
+            [])
+        )

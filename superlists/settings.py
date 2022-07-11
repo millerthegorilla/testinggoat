@@ -135,7 +135,9 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 import logging
 def NoFavIconFilter(record):
-    if "Not Found: /favicon.ico" in record.getMessage():
+    filter_msgs = [ 'Not Found: /404_no_such_url/', 
+                    'Not Found: /favicon.ico' ]
+    if any(x in record.getMessage() for x in filter_msgs):
         return False
     return True
 

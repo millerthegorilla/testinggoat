@@ -37,7 +37,7 @@ class FunctionalTest(StaticLiveServerTestCase):
         self.browser.add_cookie(dict(
             name=settings.SESSION_COOKIE_NAME,
             value=session_key,
-            path='/',
+           path='/',
         ))
 
     def wait(fn):

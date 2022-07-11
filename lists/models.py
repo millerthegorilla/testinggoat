@@ -28,11 +28,6 @@ class List(models.Model):
         return self.item_set.first().text
 
 
-    @property
-    def name(self):
-        return self.item_set.first().text
-
-
 class Item(models.Model):
     text = models.TextField(default='')
     list = models.ForeignKey(List, default=None, on_delete=models.CASCADE)
